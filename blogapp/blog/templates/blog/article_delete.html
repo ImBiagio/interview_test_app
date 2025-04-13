@@ -1,0 +1,7 @@
+<h1>Conferma eliminazione</h1>
+<p>Sei sicuro di voler eliminare "{{ object }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Conferma</button>
+</form>
+<a href="{% url 'article_detail' object.pk %}">Annulla</a>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>Lista Articoli</title>
+</head>
+<body>
+    <h1>Articoli</h1>
+    {% for article in articles %}
+        <h2>{{ articole.title }}</h2>
+        <p>{{ articole.content|truncatewords:30 }}</p>
+        <small>Pubblicato il {{ article.published_date }}</small>
+        <hr>
+    {% empty %}
+        <p>Nessun articolo presente.</p>
+    {% endfor %}
+</body>
+</html>

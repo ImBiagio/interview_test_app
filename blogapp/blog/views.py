@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Article
+
+
+def article_list(request):
+    articles = Article.objects.all().order_by('-published_date')
+    return render(request, 'blog/article_list.html', {'articles': articles})

@@ -1,4 +1,9 @@
 <h1>Articoli</h1>
+{% if user.is_authenticated %}
+  <p>Ciao {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+{% else %}
+  <p><a href="{% url 'login' %}">Login</a></p>
+{% endif %}
 <a href="{% url 'article_create' %}">Nuovo articolo</a>
 <ul>
     {% if articles %}

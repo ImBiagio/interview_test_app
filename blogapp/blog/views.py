@@ -2,8 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from rest_framework import viewsets, permissions
 
 from .models import Article
+from .serializers import ArticleSerializer
 
 
 # Qui ho scritto 2 diverse view che fanno la stessa cosa, la prima è una function based view (FBV) e la seconda è una class based view (CBV).
@@ -57,3 +59,12 @@ class ArticleDeleteView(DeleteView, LoginRequiredMixin):
     model = Article
     template_name = 'blog/article_delete.html'
     success_url = reverse_lazy('article_list')
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all().order_by('-published_date')
+    serializer_class = ArticleSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

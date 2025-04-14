@@ -1,21 +1,26 @@
-<h1>Articoli</h1>
-{% if user.is_authenticated %}
-  <p>Ciao {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
-{% else %}
-  <p><a href="{% url 'login' %}">Login</a></p>
-{% endif %}
-<a href="{% url 'article_create' %}">Nuovo articolo</a>
-<ul>
-    {% if articles %}
-        {% for article in articles %}
-            <li>
-                <a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a>
-                [<a href="{% url 'article_update' article.pk %}">Modifica</a>]
-                [<a href="{% url 'article_delete' article.pk %}">Elimina</a>]
-            </li>
-        {% endfor %}
-    {% else %}
-        <li>Nessun articolo trovato.</li>
-    {% endif %}
-</ul>
+{% extends "base.html" %}
+
+{% block title %}Lista Articoli{% endblock %}
+
+{% block header %}Articoli pubblicati{% endblock %}
+
+{% block content %}
+    <a href="{% url 'article_create' %}" role="button">Nuovo articolo</a>
+    <ul>
+        {% if articles %}
+            {% for article in articles %}
+                <li>
+                    <a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a>
+                    <small>
+                        [<a href="{% url 'article_update' article.pk %}">Modifica</a>]
+                        [<a href="{% url 'article_delete' article.pk %}">Elimina</a>]
+                    </small>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Nessun articolo trovato.</li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
 

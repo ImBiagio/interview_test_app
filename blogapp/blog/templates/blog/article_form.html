@@ -1,7 +1,17 @@
-<h1>Nuovo / Modifica Articolo</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salva</button>
-</form>
-<a href="{% url 'article_list' %}">Annulla</a>
+{% extends "base.html" %}
+
+{% block title %}{{ view.object|yesno:"Modifica Articolo,Nuovo Articolo" }}{% endblock %}
+
+{% block header %}
+    {{ view.object|yesno:"Modifica Articolo,Nuovo Articolo" }}
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" role="button">Salva</button>
+        <a href="{% url 'article_list' %}" role="button" class="contrast">Annulla</a>
+    </form>
+{% endblock %}
+

@@ -1,6 +1,19 @@
-<h1>{{ article.title }}</h1>
-<p>{{ article.content }}</p>
-<small>Pubblicato il {{ article.published_date }}</small>
-<a href="{% url 'article_update' article.pk %}">Modifica</a> |
-<a href="{% url 'article_delete' article.pk %}">Elimina</a> |
-<a href="{% url 'article_list' %}">Torna alla lista</a>
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block header %}Dettaglio Articolo{% endblock %}
+
+{% block content %}
+    <article>
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.content }}</p>
+        <small>Pubblicato il {{ article.published_date }}</small>
+        <p>Autore {{ article.author }}</p>
+        <br><br>
+        <a href="{% url 'article_update' article.pk %}" role="button">Modifica</a>
+        <a href="{% url 'article_delete' article.pk %}" role="button" class="secondary">Elimina</a>
+        <a href="{% url 'article_list' %}" role="button" class="contrast">Torna alla lista</a>
+    </article>
+{% endblock %}
+

@@ -1,7 +1,15 @@
-<h1>Conferma eliminazione</h1>
-<p>Sei sicuro di voler eliminare "{{ object }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Conferma</button>
-</form>
-<a href="{% url 'article_detail' object.pk %}">Annulla</a>
+{% extends "base.html" %}
+
+{% block title %}Conferma Eliminazione{% endblock %}
+
+{% block header %}Sei sicuro di voler eliminare l’articolo?{% endblock %}
+
+{% block content %}
+    <p><strong>{{ object.title }}</strong></p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" role="button" class="contrast">Sì, elimina</button>
+        <a href="{% url 'article_detail' object.pk %}" role="button" class="secondary">Annulla</a>
+    </form>
+{% endblock %}
+

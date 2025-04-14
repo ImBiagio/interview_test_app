@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Blog{% endblock %}</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>{% block header %}Il mio Blog{% endblock %}</h1>
+      {% if user.is_authenticated %}
+        <p>Ciao {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+      {% else %}
+        <p><a href="{% url 'login' %}">Login</a></p>
+      {% endif %}
+      <hr>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+      <hr>
+      <p>Biagio - Blog Django + PicoCSS</p>
+    </footer>
+  </main>
+</body>
+</html>

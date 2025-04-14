@@ -67,3 +67,18 @@ Non contiene codice proprietario o aziendale ed è stato sviluppato per scopi di
    docker compose exec web python manage.py migrate
    docker compose exec web python manage.py createsuperuser
     ```
+
+
+## 🌍 Accesso all'applicazione
+
+- **Admin Django** → [http://localhost:8000/admin](http://localhost:8000/admin)  
+  Accesso all’interfaccia di amministrazione per gestire utenti, articoli, permessi ecc.
+
+- **Lista articoli (CBV)** → [http://localhost:8000/list-cbv](http://localhost:8000/list-cbv)  
+  Visualizzazione degli articoli tramite Class-Based View (`ListView`), con link a modifica/eliminazione.
+
+- **API REST** → [http://localhost:8000/api/articles/](http://localhost:8000/api/articles/)  
+  Endpoint RESTful esposto da Django REST Framework, accessibile anche via `curl` o strumenti come Postman.
+
+- **Frontend statico che consuma l’API** → [http://localhost:8080](http://localhost:8080)  
+  Una pagina HTML servita da Nginx che effettua una `fetch()` all’endpoint REST e mostra gli articoli.

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import viewsets, permissions
 
-from .models import Article
+from .models import Article, Comment
 from .serializers import ArticleSerializer
 
 
@@ -27,7 +27,14 @@ def article_list(request):
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'blog/article_detail.html'
-    context_object_name = 'article'
+    context_object_name = "article"
+
+    def get_context_data(self, **kwargs):
+        contex = super().get_context_data(**kwargs)
+        article = self.get_object()
+        comments = Comment.objects.filter(article=article)
+        contex["comments"] = comments
+        return contex
 
 
 # Create view

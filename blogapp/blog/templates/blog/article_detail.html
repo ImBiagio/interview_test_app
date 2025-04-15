@@ -1,25 +1,27 @@
 {% extends "base.html" %}
-
-{% block title %}{{ article.title }}{% endblock %}
-
-{% block header %}Dettaglio Articolo{% endblock %}
-
 {% block content %}
-    <article>
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.content }}</p>
-        <small>Pubblicato il {{ article.published_date }}</small>
-        <p>Autore {{ article.author }}</p>
-        <br><br>
-        <a href="{% url 'article_update' article.pk %}" role="button">Modifica</a>
-        <a href="{% url 'article_delete' article.pk %}" role="button" class="secondary">Elimina</a>
-        <a href="{% url 'article_list' %}" role="button" class="contrast">Torna alla lista</a>
-        <br>
-        <h2>Commenti</h2>
-        {% for comment in comments %}
-            <p>{{ comment.content }}</p>
-            <p>{{ comment.author.username }}</p>
-        {% endfor %}
-    </article>
+  <h1>{{ article.title }}</h1>
+  <p>{{ article.content }}</p>
+
+  <hr>
+  <h2>Commenti</h2>
+  <ul>
+    {% for comment in comments %}
+      <li><strong>{{ comment.author.username }}</strong>: {{ comment.content }}</li>
+    {% empty %}
+      <li>Nessun commento</li>
+    {% endfor %}
+  </ul>
+
+  {% if user.is_authenticated %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Invia</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}?next={{ request.path }}">Effettua il login per commentare</a></p>
+  {% endif %}
 {% endblock %}
+
 

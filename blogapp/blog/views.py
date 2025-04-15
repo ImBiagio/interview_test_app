@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import viewsets, permissions
 
+from .forms import CommentForm
 from .models import Article, Comment
 from .serializers import ArticleSerializer
 
@@ -34,7 +35,21 @@ class ArticleDetailView(DetailView):
         article = self.get_object()
         comments = Comment.objects.filter(article=article)
         contex["comments"] = comments
+        contex["form"] = CommentForm()
         return contex
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = self.object
+            comment.author = self.request.user
+            comment.save()
+            return redirect("article_detail", pk=self.object.pk)
+        context = self.get_context_data()
+        context["form"] = form
+        return self.render_to_response(context)
 
 
 # Create view

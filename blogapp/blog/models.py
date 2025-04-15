@@ -10,3 +10,14 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    content = models.TextField()
+    published_date = models.DateTimeField(auto_now_add=True)
+
+    def short_content(self):
+        return self.content[:20]
+
